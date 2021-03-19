@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block head %}
+<link rel="stylesheet" href="../static/style.css">
+<style>
+     body{
+            background-image: url("../static/registe.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+</style>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <h1>Registrstion page</h1>
+    <div class="container">
+        <form action="{{ url_for('login') }}" method="post">
+            <div class="form-group">
+                <p id =usernamedp></p>
+                <label for="username">username</label>
+                <input type="text" id = "username" name="username" placeholder="Enter the username">
+                <p id =passwordp></p>
+                <label for="password">password</label>
+                <input type="password" id = "pass" name="password" placeholder="Enter the password">
+            </div>
+            <button class="btn btn-primary" id = login type="submit">Login</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            document.querySelector('#username').onchange = () => {
+                if (document.querySelector('#username').value.length > 0) {
+                    document.querySelector('#usernamedp').innerHTML = "username entered"
+                    user = true
+                }
+                else {
+                    document.querySelector('#usernamedp').innerHTML = "Enter the user name."
+                }
+            };
+
+            document.querySelector('#pass').onchange = () => {
+                console.log(document.querySelector('#pass').value)
+                if (document.querySelector('#pass').value.length < 6) {
+                    console.log("if statement.")
+                    document.querySelector('#passwordp').innerHTML = "The Length is less than 6."
+                    
+                }
+                else {
+                    console.log("else statement.")
+                    pwd = document.querySelector('#pass').value
+                }
+            };
+
+        });
+    </script>
+{% endblock %}

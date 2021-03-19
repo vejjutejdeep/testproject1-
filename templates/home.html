@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    Registrstion page
+<!-- <link ref="sytlesheet" type="text/css" href="../static/styles/stylehome.css"> -->
+{% endblock %}
+
+{% block body %}
+    <a class="logout" href="{{url_for('logout') }}"> logout</a>
+    <div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="table">
+        <form action = "/votehome/{{username}}" method='post'>
+                <li>
+                    {% for candidate in  candidates %}
+                                <input type= "radio" name="type" value ={{candidate.candidate_name}}>{{candidate.candidate_name}}</input>
+                    {% endfor%}
+                </li>
+            <button onclick="submitvote()" id = "btn1">submit</button>>
+        </form>
+    </div>
+    <script>
+        const btn = document.querySelector('#btn1');
+        btn.onclick = function (e) {
+            const rbs = document.querySelectorAll('input[name ="type"]');
+            let selectedvalue;
+            for (const rb of rbd) {
+                if (rb.checked) {
+                    selectedvalue = rb.value;
+                    break;
+                }
+            }
+        alert("thank you for voting");
+        $.ajax({
+            url: "/votehome",
+            type:'post',
+            data:{'candidate_name': selectedvalue},
+            success: function (response) {
+                console.log(response)
+            },
+            error: function(error) {
+                console.log(error);
+            },
+            datatype:JSON
+        });
+
+        e.preventDefault();
+
+        };
+    </script>
+{% endblock %}
